@@ -31,12 +31,19 @@ module CombinedTimeSelect
         end_minute = (@options[:end_hour] * 60) + @options.fetch(:end_minute, 59)
       end
 
+      # @options[:additional_times] should be specified in military
+      additional_times =
+        Array[@options[:additional_times]].map do |time_string|
+          hour_, minute_ = time_string.split(':')
+          hour_ * 60 + minute_
+        end
+
       if @options[:use_hidden] || @options[:discard_minute]
         build_hidden(:minute, val)
       else
         minute_options = []
         start_minute.upto(end_minute) do |minute|
-          if minute%minute_interval == 0
+          if minute%minute_interval == 0 || minute.in?(additional_times)
             ampm = minute < 720 ? ' AM' : ' PM'
             hour = minute/60
             minute_padded = zero_pad_num(minute%60)
