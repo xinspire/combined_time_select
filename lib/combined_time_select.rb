@@ -35,7 +35,7 @@ module CombinedTimeSelect
       additional_times =
         Array(@options[:additional_times]).map do |time_string|
           hour_, minute_ = time_string.split(':')
-          hour_ * 60 + minute_
+          hour_.to_i * 60 + minute_.to_i
         end
 
       if @options[:use_hidden] || @options[:discard_minute]
