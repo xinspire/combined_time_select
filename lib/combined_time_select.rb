@@ -32,14 +32,11 @@ module CombinedTimeSelect
       end
 
       # @options[:additional_times] should be specified in military
-      additional_times = []
-      if @options[:additional_times]
-        additional_times =
-          Array(@options[:additional_times]).map do |time_string|
-            hour_, minute_ = time_string.split(':')
-            hour_ * 60 + minute_
-          end
-      end
+      additional_times =
+        Array(@options[:additional_times]).map do |time_string|
+          hour_, minute_ = time_string.split(':')
+          hour_ * 60 + minute_
+        end
 
       if @options[:use_hidden] || @options[:discard_minute]
         build_hidden(:minute, val)
